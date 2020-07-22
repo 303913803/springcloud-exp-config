@@ -1,0 +1,78 @@
+server:
+  port: 8010
+
+#eureka.instance.hostname=eureka-server
+#eureka.instance.server.port=8761
+
+eureka:
+  client:
+    serviceUrl:
+      #defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka/
+      defaultZone: http://localhost:8761/eureka/
+      #defaultZone: http://47.104.227.108:8761/eureka/
+  instance:
+    prefer-ip-address: false # 优先注册IP地址而不是hostname
+    #hostname: eureka-server
+    #instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}
+  healthcheck:
+    enabled: true # 启用健康检查,注意:需要引用spring boot actuator
+
+spring:
+  application:
+    name: exp-service
+  cloud:
+    refresh:
+      refreshable: none
+#  zipkin:
+#    base-url: http://chainmonitor/
+#  sleuth:
+#    sampler:
+#      probability: 1.0
+  redis:
+    database: 0
+    host: 47.104.227.108
+    port: 6379
+    password: 123456
+    timeout: 5000
+    pool:
+      max-active: 200
+      max-wait: 60000
+      max-idle: 10
+      min-idle: 0
+userservice:
+  url: http://10.248.63.109:8000/
+  
+  
+  
+rrsln:
+  datasource:
+    baseinfo:
+      url: jdbc:mysql://rm-m5em2td9r8485c73b7o.mysql.rds.aliyuncs.com:3306/rrsln_exp?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+      username: mecv
+      password: mecvDB99
+      driverClassName: com.mysql.cj.jdbc.Driver
+      initialSize: 10
+      minIdle: 10
+      maxActive: 100
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      mapperLocation: classpath*:mapper/*.xml
+      
+      
+#logging:
+#  level:
+#    root: INFO
+#    org.springframework.web.servlet.DispatcherServlet: DEBUG
+    
+#日志配置          
+logging:
+  config: classpath:log/log-config-dev.xml 
+
+#logging:
+#  config: classpath:log4j2.yml 
